@@ -1,0 +1,163 @@
+:root {
+    --peach: #f8b195;
+    --salmon: #f27280;
+    /* highlight colour */
+    --bacon: #c06c85;
+    --blueberry: #6c5c7c;
+    --blueberry-light: #345d7e;
+}
+
+* {
+    -webkit-user-select: none;
+    color: #e7e3ea;
+}
+
+@font-face {
+    font-family: 'gameFont';
+    src: url('../font/CT ProLamina.ttf') ;
+}
+
+
+body {
+    font-family: 'gameFont';
+font-size: 32px;
+    text-align: center;
+    background-color: var(--blueberry-light);
+    margin: 0;
+}
+
+
+
+#message {
+    padding-top: 2em;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ###### Navbar ######*/
+
+.nav-links {
+    display: flex;
+    flex: 1;
+    gap: 1em;
+    /* Optional: space between buttons */
+}
+
+.button-link {
+    flex: 1;
+    display: inline-block;
+    padding: 10px;
+    margin-right: 2%;
+    margin-left: 2%;
+    background-color: var(--bacon);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* .button-link:hover {
+    background-color: var(--blueberry-light);
+} */
+
+.button-link.active {
+    background-color: var(--peach);
+}
+
+
+.button-link::after {
+    background-color: #ff00ea;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6c5c7c;
+    padding: 0.5em;
+    margin-bottom: 20px;
+}
+
+/* allow responsive elemetns in navbar */
+.navbar>* {
+    flex: 1;
+    text-align: center;
+}
+
+
+
+
+
+#cars
+{
+ background-color: var(--blueberry);
+ width: 20%;
+ text-align: center;
+ height: 5%;
+ border-radius: 15px;
+
+}
+
+
+
+/* when elements get within a min-width of 300px, they will be stacked */
+@media (max-width: 300px) {
+    .navbar>* {
+        flex: none;
+        width: 100%;
+    }
+}
+
+.burger {
+    display: none;
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* ########################################################## */
+/* Responsive: Show burger and hide nav links */
+/* ########################################################## */
+
+@media (max-width: 600px) {
+    .burger {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 1em;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .button-link {
+        margin: 0.5em 0;
+        width: 100%;
+        text-align: left;
+        padding-left: 1em;
+    }
+
+    .navbar>* {
+        flex: none;
+        width: 100%;
+        text-align: left;
+    }
+}

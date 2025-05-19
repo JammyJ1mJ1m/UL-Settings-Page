@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/resolutionStyles.css">
+
+</head>
+
+<body>
+
+    <div id="navbar-placeholder"></div>
+
+    <div>
+
+
+
+        <div class="resDropDownParent" >
+
+            <label for="resolution">Resolution:</label>
+            <div class="dropdown">
+                <button onclick="toggleDropdown()" class="dropbtn">Dropdown</button>
+                <div id="resolutionDropdown" class="dropdown-content">
+
+                </div>
+            </div>
+            <!-- Resolution:
+            <div id="dropdown">
+                <div class="dropdown-select">Select Resolution</div>
+                <div id="dropdown-options" class="dropdown-options">
+
+                </div>
+            </div> -->
+        </div>
+
+        <div>
+            Fullscreen:
+            <input type="checkbox" id="fullscreen-checkbox">
+        </div>
+
+        <div>
+            V-Sync:
+            <input type="checkbox" id="vsync-checkbox">
+        </div>
+        <script src="js/main.js"></script>
+</body>
+
+</html>

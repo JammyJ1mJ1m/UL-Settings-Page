@@ -1,0 +1,71 @@
+@import url("styles.css");
+
+
+
+/* The actual dropdown button */
+.dropbtn {
+    margin-left: 20px;
+    border-radius: 15px;
+    background-color: var(--blueberry);
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover,
+.dropbtn:focus {
+
+    background-color: var(--salmon);
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    border-radius: 15px;
+    display: none;
+    position: absolute;
+    background-color: var(--blueberry);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    border-radius: 15px;
+
+    background-color: var(--salmon);
+}
+
+.show {
+    display: block;
+}
+
+.dropbtn::after {
+    content: ' ▼';
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+.resDropDownParent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
