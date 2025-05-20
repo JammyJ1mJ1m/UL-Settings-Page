@@ -63,9 +63,35 @@
     margin-left: 6px;
 }
 
-.resDropDownParent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+
+
+
+.contentWrapper {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each setting row is a horizontal pair */
+.settingRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Label and input split the row evenly */
+.settingRow > label {
+  flex: 1;
+  text-align: left;
+  font-size: 1.5em;
+}
+
+.inputWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }

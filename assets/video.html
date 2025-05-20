@@ -10,38 +10,38 @@
 
     <div id="navbar-placeholder"></div>
 
-    <div>
-
-
-
-        <div class="resDropDownParent" >
-
+    
+    <div class="contentWrapper">
+        <div class="settingRow">
             <label for="resolution">Resolution:</label>
-            <div class="dropdown">
+            <div class="inputWrapper">
                 <button onclick="toggleDropdown()" class="dropbtn">Dropdown</button>
-                <div id="resolutionDropdown" class="dropdown-content">
-
-                </div>
+                <div id="resolutionDropdown" class="dropdown-content"></div>
             </div>
-            <!-- Resolution:
-            <div id="dropdown">
-                <div class="dropdown-select">Select Resolution</div>
-                <div id="dropdown-options" class="dropdown-options">
-
-                </div>
-            </div> -->
         </div>
 
-        <div>
-            Fullscreen:
-            <input type="checkbox" id="fullscreen-checkbox">
+        <div class="settingRow">
+            <label for="fullscreen">Fullscreen:</label>
+            <div class="inputWrapper">
+                <label class="checkBoxContainer">
+                    <input type="checkbox" id="fullscreen" checked>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
         </div>
 
-        <div>
-            V-Sync:
-            <input type="checkbox" id="vsync-checkbox">
+        <div class="settingRow">
+            <label for="vsync">V-Sync:</label>
+            <div class="inputWrapper">
+                <label class="checkBoxContainer">
+                    <input type="checkbox" id="vsync">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
         </div>
-        <script src="js/main.js"></script>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
 
 </html>

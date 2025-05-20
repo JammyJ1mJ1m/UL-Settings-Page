@@ -1,7 +1,6 @@
 :root {
     --peach: #f8b195;
     --salmon: #f27280;
-    /* highlight colour */
     --bacon: #c06c85;
     --blueberry: #6c5c7c;
     --blueberry-light: #345d7e;
@@ -14,13 +13,13 @@
 
 @font-face {
     font-family: 'gameFont';
-    src: url('../font/CT ProLamina.ttf') ;
+    src: url('../font/CT ProLamina.ttf');
 }
 
 
 body {
     font-family: 'gameFont';
-font-size: 32px;
+    font-size: 32px;
     text-align: center;
     background-color: var(--blueberry-light);
     margin: 0;
@@ -36,8 +35,10 @@ font-size: 32px;
     text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
 }
 
+/* ########################################################## */
+/*                          Navbar                            */
+/* ########################################################## */
 
-/* ###### Navbar ######*/
 
 .nav-links {
     display: flex;
@@ -89,21 +90,6 @@ font-size: 32px;
     flex: 1;
     text-align: center;
 }
-
-
-
-
-
-#cars
-{
- background-color: var(--blueberry);
- width: 20%;
- text-align: center;
- height: 5%;
- border-radius: 15px;
-
-}
-
 
 
 /* when elements get within a min-width of 300px, they will be stacked */
@@ -160,4 +146,88 @@ font-size: 32px;
         width: 100%;
         text-align: left;
     }
+}
+
+
+
+
+/* #################################################################### */
+/*                              Checkboxes                              */
+/* #################################################################### */
+
+
+.checkboxWrapper {
+  margin-left: 25%;
+  margin-right: 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* spacing between sliders */
+}
+
+
+/* The container */
+.checkBoxContainer {
+    display: flex;
+    align-items: center; /* vertical centering */
+    justify-content: space-between;
+    font-size: 22px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    user-select: none;
+    gap: 25px;
+    gap: 10px;
+
+}
+
+
+/* Hide the browser's default checkbox beacuse its disgusting */
+
+.checkBoxContainer input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    height: 25px;
+    width: 25px;
+    background-color: var(--blueberry);
+    border-radius: 5px;
+    position: relative; /* for the checkmark pseudo-element */
+    flex-shrink: 0; /* prevent it from shrinking */
+}
+
+/* On mouse-over*/
+.checkBoxContainer:hover input ~ .checkmark {
+    background-color: var(--salmon);
+}
+
+/* When the checkbox is checked */
+.checkBoxContainer input:checked ~ .checkmark {
+    background-color: var(--peach);
+}
+
+/* Create the checkmark (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkBoxContainer input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark */
+.checkBoxContainer .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
 }
