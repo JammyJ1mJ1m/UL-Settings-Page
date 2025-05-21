@@ -193,7 +193,7 @@ JSValue MyApp::HandleAudioSliderChange(const JSObject& thisObject, const JSArgs&
 		ultralight::String ulString = args[0].ToString();
 		std::string volumeType = std::string(ulString.utf8().data());
 		int value = (int)args[1].ToNumber();
-
+	
 		std::cout << "[ VOLUME ] " << volumeType << " - " << value << std::endl;
 	}
 	else {

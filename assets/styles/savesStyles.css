@@ -1,0 +1,150 @@
+@import url("styles.css");
+
+.contentWrapper {
+    /* center this div horizontally */
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    /* align-items: center; */
+    height: 100vh;
+    border: 2px solid var(--salmon);
+    width: 50%;
+    margin: auto;
+    margin-bottom: 50px;
+    width: 50%;
+    padding: 10px;
+    max-width: 400px;
+
+    background-color: var(--burnt-log);
+
+    overflow: auto;
+
+    max-height: 500px;
+
+}
+
+
+/*############################################################################ */
+/*                          Main save button                                   */
+/*#############################################################################*/
+.saveButton {
+    width: 100%;
+    background-color: var(--lime);
+
+    border: none;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    height: 10%;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+
+
+    align-items: center;
+    justify-content: space-between;
+    min-height: 50px;
+    flex-shrink: 0;
+
+
+}
+
+.saveButton:hover {
+    background-color: var(--salmon);
+    color: white;
+    cursor: pointer;
+}
+
+
+/*############################################################################ */
+/*                          Actual save file items                             */
+/*#############################################################################*/
+.saveItem {
+    background-color: var(--charcoal);
+    border: none;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 5px;
+
+    height: 10%;
+
+    transition: background-color 0.3s ease;
+    transition: transform 0.05s ease;
+    border-radius: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+
+    align-items: center;
+    justify-content: space-between;
+    min-height: 50px;
+    flex-shrink: 0;
+}
+
+.saveItem:active {
+  transform: scale(0.97);
+}
+
+
+.saveItem:hover {
+    background-color: var(--charcoal-light);
+    color: white;
+    cursor: pointer;
+}
+
+.saveItem>.leftCol {
+
+    width: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.saveItem>.rightCol {
+
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.deleteSaveBut {
+    justify-content: center;
+    background-color: #00000000;
+    color: var(--denial-red);
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+    padding: 0px;
+    height: 25px;
+    width: 25px;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    
+
+}
+
+.deleteSaveBut:hover {
+    color: var(--salmon);
+    cursor: pointer;
+}
+
+.save-entry {
+    display: flex;
+    flex-direction: column;
+}
