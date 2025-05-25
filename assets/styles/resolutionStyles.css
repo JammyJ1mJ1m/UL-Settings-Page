@@ -5,7 +5,7 @@
 /* The actual dropdown button */
 .dropbtn {
     margin-left: 20px;
-    border-radius: 15px;
+    border-radius: var(--defBorderRadius);
     background-color: var(--blueberry);
     color: white;
     padding: 16px;
@@ -29,7 +29,7 @@
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-    border-radius: 15px;
+    border-radius: var(--defBorderRadius);
     display: none;
     position: absolute;
     background-color: var(--blueberry);
@@ -48,7 +48,7 @@
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-    border-radius: 15px;
+    border-radius: var(--defBorderRadius);
 
     background-color: var(--salmon);
 }
