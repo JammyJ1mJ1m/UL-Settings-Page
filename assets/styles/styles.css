@@ -5,21 +5,30 @@
     --blueberry: #6c5c7c;
     --blueberry-light: #345d7e;
     --denial-red: #e44d42;
+    --denial-red-hover: #c44138;
 
     --charcoal: #4c4c4c;
+    --charcoal-midopacity: #4c4c4c9c;
     --charcoal-light: #646464;
     --burnt-log: #2d2d2d;
 
     --lime: #6ab04c;
     --lime-light: #2ecb70;
     --lime-dark: #4cd137;
+
+    --confirm-blue: #3597d9;
+    --confirm-blue-hover: #3fb2ff;
     
+    --text-col: #e7e3ea;
+
+
+    --defBorderRadius: 15px;
 
 }
 
 * {
     -webkit-user-select: none;
-    color: #e7e3ea;
+    color: var(--text-col);
 }
 
 @font-face {

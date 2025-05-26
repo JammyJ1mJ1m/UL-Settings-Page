@@ -90,7 +90,7 @@
 }
 
 .saveItem:active {
-  transform: scale(0.97);
+    transform: scale(0.97);
 }
 
 
@@ -135,7 +135,7 @@
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 10px;
-    
+
 
 }
 
@@ -147,4 +147,157 @@
 .save-entry {
     display: flex;
     flex-direction: column;
+}
+
+
+/*############################################################################ */
+/*                          Save file name input                              */
+/*#############################################################################*/
+.saveCreatorPopupCont {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+
+    background-color: var(--burnt-log);
+    border: 2px solid var(--salmon);
+    border-radius: var(--defBorderRadius);
+
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+
+    z-index: 9999;
+display: flex;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.saveCreatorPopupCont.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.inputRow {
+    display: flex;
+    justify-content: center;
+}
+
+.buttonRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.buttonRow button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--salmon);
+    color: var(--burnt-log);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    font-size: 1.0em;
+
+}
+
+/* .buttonRow button:hover {
+    background-color: var(--peach);
+} */
+
+#saveNameInput {
+    background-color: var(--charcoal);
+    color: var(--text-col);
+    border: none;
+    border-radius: 8px;
+    height: 65px;
+    width: 100%;
+    padding: 0 10px;
+    font-size: 1.0em;
+
+}
+
+#saveNameInput:focus {
+    outline: none;
+    background-color: var(--charcoal-light);
+}
+
+
+
+
+.buttonRow .cancelButton {
+    background-color: var(--denial-red);
+    color: var(--text-col);
+}
+
+.buttonRow .okButton {
+    background-color: var(--confirm-blue);
+    color: var(--text-col);
+}
+
+.buttonRow .okButton:hover {
+    background-color: var(--confirm-blue-hover);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.buttonRow .cancelButton:hover {
+    background-color: var(--denial-red-hover);
+    transition: background-color 0.3s ease-in-out;
+
+}
+
+/* .buttonRow>.okButton {
+    width: 20%;
+    color: var(--text-col);
+}
+
+.buttonRow>.cancelButton {
+    width: 80%;
+    color: var(--text-col);
+} */
+
+
+
+/*############################################################################ */
+/*                          overwrite saves                                    */
+/*#############################################################################*/
+.overwriteCreatorPopupCont {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+
+    background-color: var(--burnt-log);
+    border: 2px solid var(--salmon);
+    border-radius: var(--defBorderRadius);
+
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+
+    z-index: 9999;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.overwriteCreatorPopupCont.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }

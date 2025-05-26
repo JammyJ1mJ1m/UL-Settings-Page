@@ -1,53 +1,119 @@
+let currentSaveID = null;
 
 let saves = [
-    new SaveItem("1", "01/10/2025 12:00:00"),
-    new SaveItem("2", "02/10/2025 12:00:00"),
-    new SaveItem("3", "03/10/2025 12:00:00"),
-    new SaveItem("4", "04/10/2025 12:00:00"),
-    new SaveItem("5", "05/10/2025 12:00:00"),
-    new SaveItem("6", "06/10/2025 12:00:00"),
-    new SaveItem("7", "07/10/2025 12:00:00"),
-    new SaveItem("8", "08/10/2025 12:00:00"),
-    new SaveItem("9", "09/10/2025 12:00:00"),
-    new SaveItem("10", "10/10/2025 12:00:00"),
-    new SaveItem("11", "11/10/2025 12:00:00"),
-    new SaveItem("12", "12/10/2025 12:00:00"),
-    new SaveItem("13", "13/10/2025 12:00:00"),
-    new SaveItem("14", "14/10/2025 12:00:00"),
-    new SaveItem("15", "15/10/2025 12:00:00"),
-    new SaveItem("16", "16/10/2025 12:00:00"),
-    new SaveItem("17", "17/10/2025 12:00:00"),
-    new SaveItem("18", "18/10/2025 12:00:00"),
-    new SaveItem("19", "19/10/2025 12:00:00"),
-    new SaveItem("20", "20/10/2025 12:00:00"),
-    new SaveItem("21", "21/10/2025 12:00:00"),
-    new SaveItem("22", "22/10/2025 12:00:00"),
-    new SaveItem("23", "23/10/2025 12:00:00"),
-    new SaveItem("24", "24/10/2025 12:00:00"),
-    new SaveItem("25", "25/10/2025 12:00:00"),
-    new SaveItem("26", "26/10/2025 12:00:00"),
-    new SaveItem("27", "27/10/2025 12:00:00"),
-    new SaveItem("28", "28/10/2025 12:00:00"),
-    new SaveItem("29", "29/10/2025 12:00:00"),
-    new SaveItem("30", "30/10/2025 12:00:00"),
-    new SaveItem("31", "31/10/2025 12:00:00"),
-    new SaveItem("32", "01/11/2025 12:00:00"),
+
 
 ];
 
 
+// function saveGame() {
+
+//     console.log("Save game triggered.");
+//     // Show the save creator popup
+//     showSavePopup(true);
+//     // RenderSaveList();
+// }
+
+
+function ClosePopup(pElementID) {
+
+    // Close the popup by removing the 'active' class
+    document.getElementById(pElementID).classList.remove('active');
+    document.getElementById("saveNameInput").value = "";
+
+
+    // document.getElementById("saveNameInput").placeholder = "Enter save name";
+}
+
+function showSavePopup(pIsShowing, pElementID) {
+
+    const input = document.getElementById("saveNameInput");
+
+    if (pIsShowing) {
+        // saveCreatorPopupCont
+        document.getElementById("saveCreatorPopupCont").classList.add('active');
+    }
+    else
+        document.getElementById("saveCreatorPopupCont").classList.remove('active');
+
+    input.value = "";
+    input.placeholder = "Enter save name";
+
+    setTimeout(() => {
+        input.focus();
+    }, 50);
+
+}
+
+function closeSaveCreatorPopup(pIsSaving) {
+
+    if (!pIsSaving) {
+        showSavePopup(false);
+        console.log("Save cancelled.");
+        return;
+    }
+
+    SaveGame();
+
+}
+
+// handles overwrite save
+function CreateOverwrite() {
+    // dont need a name or id as it gets overwritten by the original file
+    return new SaveItem("overwrite", Math.floor(Date.now() / 1000), -1);
+}
+
+
+// This creates the actual save item object
+function CreateSaveItem() {
+    let saveName = document.getElementById("saveNameInput").value;
+    if (saveName.length < 1) {
+        console.log("Save name is empty.");
+        // set inner text of saveNameError to "Save name is empty."
+        document.getElementById("saveNameInput").placeholder = "Save name can't be empty";
+        return false; // Disgusting, but it works because JS is *quirky*
+    }
+
+    let timeStamp = Math.floor(Date.now() / 1000);
+    let saveItem = new SaveItem(saveName, timeStamp, saves.length + 1); // Use saves.length + 1 as ID
+    return saveItem;
+}
+
+// Actually saves the game
+function SaveGame() {
+
+    let saveItem = CreateSaveItem(); // Use saves.length + 1 as ID
+
+    if (!saveItem) {
+        console.log("Failed to create save item.");
+        return;
+    }
+
+    saves.push(saveItem);
+
+    showSavePopup(false);
+    CreateSaveItemLabel(saveItem.GetSaveName(), saveItem.GetTimeStamp(), saveItem.GetID());
+
+
+}
+
+
 // This will create the actual element that will be clickable on the page
-function CreateSaveItem(pSaveName, pTimeStamp) {
-    let content = document.getElementById("contentWrapper");
+function CreateSaveItemLabel(pSaveName, pTimeStamp, pID) {
+    let content = document.getElementById("savesContainer");
 
 
     const saveItem = document.createElement("div");
     saveItem.className = "saveItem";
+    saveItem.dataset.id = pID; // 👈 Attach ID here
+
+
+    // This is going to attach the onclick behaviour to the "button"
     saveItem.onclick = function (e) {
-        
-        // Prevent clicks on delete button from triggering this
         if (e.target.closest('.deleteSaveBut')) return;
-        OverwriteSave();
+        currentSaveID = pID;
+        toggleOverwritePopup(true); // Show the overwrite popup
+
     };
 
 
@@ -105,15 +171,66 @@ function PopulateSaves() {
         const save = saves[i];
         let saveName = save.GetSaveName();
         let timeStamp = save.GetTimeStamp();
-        CreateSaveItem(saveName, timeStamp);
+    // CreateSaveItem(saveName, timeStamp);
 
 
     }
 }
 
 
-function OverwriteSave() {
-    console.log("Overwrite save triggered.");
+function toggleOverwritePopup(isVisible) {
+    const popup = document.getElementById("overwriteCreatorPopupCont");
+    if (isVisible) {
+        popup.classList.add('active');
+    } else {
+        popup.classList.remove('active');
+    }
+}
+
+function OverwriteSave(saveID) {
+
+
+
+    console.log("Overwrite save triggered for ID:", saveID);
+
+    // Find the SaveItem in the array
+    const foundSave = saves.find(s => s.GetID() === saveID);
+    if (foundSave) {
+        const newData = CreateOverwrite();
+        foundSave.OverWrite(newData); // or do something else
+        toggleOverwritePopup(false); // Hide the popup
+        // RenderSaveList(); // Re-render the save list
+    } else {
+        console.log("No save found with ID:", saveID);
+    }
+
+
+
+    // remove the items from savesContainer and re add them
+    const content = document.getElementById("savesContainer");
+    const saveItems = content.querySelectorAll(".saveItem");
+    saveItems.forEach(item => item.remove());
+
+    // Re-render the save list
+  RenderSaveList();
+
+
+}
+
+function RenderSaveList() {
+    const content = document.getElementById("savesContainer");
+
+    // Remove all saveItems (keep the 'New Save' button)
+    const saveItems = content.querySelectorAll(".saveItem");
+    saveItems.forEach(item => item.remove());
+
+    // Sort saves by timestamp DESC (newest first)
+    const sortedSaves = [...saves].sort((a, b) => b.GetTimeStamp() - a.GetTimeStamp());
+
+    // Render each save
+    for (let save of sortedSaves) {
+        CreateSaveItemLabel(save.GetSaveName(), save.GetTimeStamp(), save.GetID());
+    }
 }
 
 function DeleteSave() {
@@ -123,7 +240,11 @@ function DeleteSave() {
 // Waits for page to load first 
 window.addEventListener('DOMContentLoaded', () => {
 
+
+
     PopulateSaves();
+
+
 });
 
 window.onclick = function (event) {
