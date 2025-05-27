@@ -241,7 +241,7 @@ function DeleteSave() {
 window.addEventListener('DOMContentLoaded', () => {
 
 
-
+    console.log("Page loaded, populating saves...");
     PopulateSaves();
 
 

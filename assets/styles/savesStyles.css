@@ -1,5 +1,10 @@
 @import url("styles.css");
 
+
+* {
+    /* -webkit-user-select: <text|auto|all> !important; */
+}
+
 .contentWrapper {
     /* center this div horizontally */
     display: flex;
@@ -172,9 +177,9 @@
     padding: 20px;
 
     z-index: 9999;
-display: flex;
+    display: flex;
     opacity: 0;
-    visibility: hidden;
+    /* visibility: hidden; */
     pointer-events: none;
 
     transition: opacity 0.2s ease, visibility 0.2s ease;
@@ -194,7 +199,8 @@ display: flex;
 .buttonRow {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 40px;
+    margin-top: 10px;
 }
 
 .buttonRow button {
@@ -225,11 +231,19 @@ display: flex;
     padding: 0 10px;
     font-size: 1.0em;
 
+    /* -webkit-user-select: text !important; */
+
+
 }
 
 #saveNameInput:focus {
     outline: none;
     background-color: var(--charcoal-light);
+
+
+    /* This fixes input issue within ultralight */
+    -webkit-user-select: text !important;
+
 }
 
 
@@ -296,6 +310,7 @@ display: flex;
     pointer-events: none;
     transition: opacity 0.2s ease, visibility 0.2s ease;
 }
+
 .overwriteCreatorPopupCont.active {
     opacity: 1;
     visibility: visible;
