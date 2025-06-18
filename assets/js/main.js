@@ -160,7 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
   // can change this to whereever you need it to be
-LoadSettings('../config/config.json');
+// LoadSettings('../config/config.json');
 
   CreateNavbar();
 

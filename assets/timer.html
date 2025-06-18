@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>HUD</title>
+    <style>
+        * {
+            -webkit-user-select: none !important;
+        }
+
+        @font-face {
+            font-family: 'gameFont';
+            src: url('../font/CT ProLamina.ttf');
+        }
+
+        .timer-outer {
+                position: absolute;
+                left: 50vw;
+                top: 16px;
+                transform: translateX(-50%);
+                z-index: 10;
+            }
+
+            .timer-inner {
+                position: relative;
+                width: 120px;
+                text-align: left;
+                font-size: 32px;
+                font-family: 'gameFont';
+            }
+
+            #timer {
+                position: relative;
+                color: white;
+                text-shadow: -1px -1px 4px black, -1px 1px 4px black, 1px -1px 4px black, 1px 1px 4px black;
+                display: inline-block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+    </style>
+
+    <script>
+        let startTime = Date.now();
+        let countdownDuration = 5 * 60 * 1000; 
+
+        function SetTimer(ms) {
+            const totalMs = Math.max(0, ms); 
+            const minutes = String(Math.floor(totalMs / 60000)).padStart(2, '0');
+            const seconds = String(Math.floor((totalMs % 60000) / 1000)).padStart(2, '0');
+            const millis = String(Math.floor((totalMs % 1000) / 10)).padStart(2, '0'); 
+            document.getElementById('timer').textContent = `${minutes}:${seconds}:${millis}`;
+        }
+
+        function UpdateTimer() {
+            const elapsed = Date.now() - startTime;
+            const remaining = countdownDuration - elapsed;
+            SetTimer(remaining);
+
+            if (remaining > 0) {
+                requestAnimationFrame(UpdateTimer);
+            } else {
+                SetTimer(0);
+            }
+        }
+
+        window.onload = () => {
+            UpdateTimer();
+        };
+    </script>
+</head>
+
+<body>
+    <noscript>
+        <div style="color: red; font-size: 32px; font-family: Aurora;">
+            JavaScript has been disabled by Ultralight. UI won't work without it.
+        </div>
+    </noscript>
+
+    <!-- If we align the text centre, it will jitter as the timer changes -->
+    <!-- Solution is to use a container which is position halfway across the screen -->
+    <!-- and then we can align the timer text to the left. Which solves the issue -->
+    <div class="timer-outer">
+        <div class="timer-inner">
+            <span id="timer">00:00:00</span>
+        </div>
+    </div>
+</body>
+
+</html>

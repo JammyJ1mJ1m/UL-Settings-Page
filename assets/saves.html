@@ -14,38 +14,51 @@
     Game
 
 
+    <!--<button class="okButton" onclick="RenderSaveList()">LoadSaves</button>-->
+
+
     <div class="contentWrapper" id="contentWrapper">
 
         <button class="saveButton" onclick="showSavePopup(true)">New Save</button>
-<div id="savesContainer">
-    
-</div>
+        <div id="savesContainer">
+
+        </div>
 
     </div>
 
 
 
-<div class="savesDialogCont">
-    <div class="saveCreatorPopupCont" id="saveCreatorPopupCont">
-        <div class="inputRow">
-            <input type="text" id="saveNameInput" placeholder="Enter save name">
-        </div>
-        <div class="buttonRow">
-            <button class="cancelButton" onclick="ClosePopup('saveCreatorPopupCont')">Cancel</button>
-            <button class="okButton" onclick="SaveGame()">OK</button>
+    <div class="savesDialogCont">
+        <div class="saveCreatorPopupCont" id="saveCreatorPopupCont">
+            <div class="inputRow">
+                <input type="text" id="saveNameInput" placeholder="Enter save name">
+            </div>
+            <div class="buttonRow">
+                <button class="cancelButton" onclick="ClosePopup('saveCreatorPopupCont')">Cancel</button>
+                <button class="okButton" onclick="SaveGame()">OK</button>
+            </div>
         </div>
     </div>
-</div>  
 
     <div class="overwriteDialogCont">
         <div class="overwriteCreatorPopupCont" id="overwriteCreatorPopupCont">
-        Are you sure you want to overwrite this save?
+            Are you sure you want to overwrite this save?
             <div class="buttonRow">
                 <button class="cancelButton" onclick="ClosePopup('overwriteCreatorPopupCont')">Cancel</button>
                 <button class="okButton" onclick="OverwriteSave(currentSaveID)">OK</button>
             </div>
         </div>
-    </div>  
+    </div>
+
+    <div class="confirmDeleteCont">
+        <div class="deleteSaveCreatorPopupCont" id="deleteSaveCreatorPopupCont">
+            Are you sure you want to delete this save?
+            <div class="buttonRow">
+                <button class="cancelButton" onclick="ClosePopup('deleteSaveCreatorPopupCont')">Cancel</button>
+                <button class="okButton" onclick="DeleteSave(currentSaveID)">OK</button>
+            </div>
+        </div>
+    </div>
 
     <!-- <button onclick="CustomHandleButton(event);">Send to/from C++ - JS!</button> -->
     <!--             ^^^^^^^^^^^^^^^^^^ - This calls a JS function that is needed for the C++ interop   -->

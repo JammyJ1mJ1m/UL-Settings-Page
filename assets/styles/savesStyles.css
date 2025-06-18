@@ -1,16 +1,12 @@
 @import url("styles.css");
 
-
 * {
-    /* -webkit-user-select: <text|auto|all> !important; */
+    font-family: 'gameFont'
 }
 
 .contentWrapper {
-    /* center this div horizontally */
     display: flex;
-    /* justify-content: center; */
     flex-direction: column;
-    /* align-items: center; */
     height: 100vh;
     border: 2px solid var(--salmon);
     width: 50%;
@@ -41,7 +37,6 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
     margin-top: 10px;
     margin-bottom: 20px;
 
@@ -54,7 +49,7 @@
     justify-content: space-between;
     min-height: 50px;
     flex-shrink: 0;
-
+    font-size: 1.5em;
 
 }
 
@@ -68,6 +63,9 @@
 /*############################################################################ */
 /*                          Actual save file items                             */
 /*#############################################################################*/
+.saveItem *{
+    font-size: 1em;
+}
 .saveItem {
     background-color: var(--charcoal);
     border: none;
@@ -75,23 +73,21 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
     margin-top: 5px;
-
     height: 10%;
-
     transition: background-color 0.3s ease;
     transition: transform 0.05s ease;
     border-radius: 10px;
 
+
+
     display: flex;
     flex-wrap: wrap;
-
-
     align-items: center;
     justify-content: space-between;
     min-height: 50px;
     flex-shrink: 0;
+        border-left: 6px solid #3498db;
 }
 
 .saveItem:active {
@@ -130,18 +126,17 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-
     padding: 0px;
     height: 25px;
     width: 25px;
     transition: background-color 0.3s ease;
-    border-radius: 8px;
-
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 10px;
+    /* default segoe ui font family*/
 
-
+    /*font-family: Arial, Helvetica, sans-serif;*/
+    /*font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif*/
 }
 
 .deleteSaveBut:hover {
@@ -243,6 +238,9 @@
 
     /* This fixes input issue within ultralight */
     -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
 
 }
 
@@ -316,3 +314,33 @@
     visibility: visible;
     pointer-events: auto;
 }
+
+
+
+.deleteSaveCreatorPopupCont {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+    background-color: var(--burnt-log);
+    border: 2px solid var(--salmon);
+    border-radius: var(--defBorderRadius);
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    z-index: 9999;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+    .deleteSaveCreatorPopupCont.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }

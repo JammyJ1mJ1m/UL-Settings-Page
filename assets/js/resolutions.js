@@ -12,13 +12,16 @@ const mValidResolutions = [
 ];
 
 function selectResolution(value) {
-  console.log("Selected resolution:", value); // or store it in a variable
+  console.log("Selected resolution: " + value); // or store it in a variable
   // Optionally update button text:
   document.querySelector(".dropbtn").textContent = value;
 
 
   // converting the string resolution to the index of the array
   mResolutionID = mValidResolutions.indexOf(value);
+
+  // now send the resolution ID to C++
+    var message = HandleDropdown(mResolutionID);
 
   // Close dropdown
   toggleDropdown();
@@ -68,6 +71,22 @@ function PopulateResolutions() {
   }
 }
 
+
+
+
+document.getElementById("vsync").addEventListener("change", function() {
+    // Call your specific function here
+
+    var message = HandleRadioButton(this.checked, "vsync");
+
+});
+
+document.getElementById("fullscreen").addEventListener("change", function() {
+    // Call your specific function here
+
+    var message = HandleRadioButton(this.checked, "fullscreen");
+
+});
 
 window.addEventListener('DOMContentLoaded', () => {
   CreateNavbar();

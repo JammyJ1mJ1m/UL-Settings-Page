@@ -1,18 +1,8 @@
 let currentSaveID = null;
 
 let saves = [
-
-
+    new SaveItem("Dummy Save", Math.floor(Date.now() / 1000), 0) // ID 0 is a dummy save
 ];
-
-
-// function saveGame() {
-
-//     console.log("Save game triggered.");
-//     // Show the save creator popup
-//     showSavePopup(true);
-//     // RenderSaveList();
-// }
 
 
 function ClosePopup(pElementID) {
@@ -20,9 +10,6 @@ function ClosePopup(pElementID) {
     // Close the popup by removing the 'active' class
     document.getElementById(pElementID).classList.remove('active');
     document.getElementById("saveNameInput").value = "";
-
-
-    // document.getElementById("saveNameInput").placeholder = "Enter save name";
 }
 
 function showSavePopup(pIsShowing, pElementID) {
@@ -82,7 +69,7 @@ function CreateSaveItem() {
 // Actually saves the game
 function SaveGame() {
 
-    let saveItem = CreateSaveItem(); // Use saves.length + 1 as ID
+    let saveItem = CreateSaveItem();
 
     if (!saveItem) {
         console.log("Failed to create save item.");
@@ -92,9 +79,10 @@ function SaveGame() {
     saves.push(saveItem);
 
     showSavePopup(false);
-    CreateSaveItemLabel(saveItem.GetSaveName(), saveItem.GetTimeStamp(), saveItem.GetID());
+    //CreateSaveItemLabel(saveItem.GetSaveName(), saveItem.GetTimeStamp(), saveItem.GetID());
 
-
+    TriggerSave(saveItem.GetSaveName());
+    RenderSaveList();
 }
 
 
@@ -105,7 +93,7 @@ function CreateSaveItemLabel(pSaveName, pTimeStamp, pID) {
 
     const saveItem = document.createElement("div");
     saveItem.className = "saveItem";
-    saveItem.dataset.id = pID; // 👈 Attach ID here
+    saveItem.dataset.id = pID; // This gives the label itself the data-id attrib
 
 
     // This is going to attach the onclick behaviour to the "button"
@@ -113,7 +101,6 @@ function CreateSaveItemLabel(pSaveName, pTimeStamp, pID) {
         if (e.target.closest('.deleteSaveBut')) return;
         currentSaveID = pID;
         toggleOverwritePopup(true); // Show the overwrite popup
-
     };
 
 
@@ -147,8 +134,10 @@ function CreateSaveItemLabel(pSaveName, pTimeStamp, pID) {
     deleteButton.className = "deleteSaveBut";
     deleteButton.textContent = "x";
 
-    deleteButton.onclick = function () {
-        DeleteSave();
+    deleteButton.onclick = function (e) {
+        // DeleteSave(pID);
+        currentSaveID = pID; 
+        toggleDeletePopup(true);
     };
 
     rightCol.appendChild(deleteButton);
@@ -160,7 +149,7 @@ function CreateSaveItemLabel(pSaveName, pTimeStamp, pID) {
 
     content.appendChild(saveItem);
 
-    console.log("Save item created:", pSaveName, pTimeStamp);
+    console.log("Save item created: "+ pSaveName + " - " + pTimeStamp);
 }
 
 
@@ -171,7 +160,7 @@ function PopulateSaves() {
         const save = saves[i];
         let saveName = save.GetSaveName();
         let timeStamp = save.GetTimeStamp();
-    // CreateSaveItem(saveName, timeStamp);
+        // CreateSaveItem(saveName, timeStamp);
 
 
     }
@@ -179,7 +168,24 @@ function PopulateSaves() {
 
 
 function toggleOverwritePopup(isVisible) {
+
+    console.log("Toggling overwrite popup visibility: " + isVisible);
+
+
     const popup = document.getElementById("overwriteCreatorPopupCont");
+    if (isVisible) {
+        popup.classList.add('active');
+    } else {
+        popup.classList.remove('active');
+    }
+}
+
+function toggleDeletePopup(isVisible) {
+
+    console.log("Toggling confirm delete popup visibility: " + isVisible);
+
+
+    const popup = document.getElementById("deleteSaveCreatorPopupCont");
     if (isVisible) {
         popup.classList.add('active');
     } else {
@@ -189,7 +195,7 @@ function toggleOverwritePopup(isVisible) {
 
 function OverwriteSave(saveID) {
 
-
+    TriggerOverwrite(saveID);
 
     console.log("Overwrite save triggered for ID:", saveID);
 
@@ -197,53 +203,80 @@ function OverwriteSave(saveID) {
     const foundSave = saves.find(s => s.GetID() === saveID);
     if (foundSave) {
         const newData = CreateOverwrite();
-        foundSave.OverWrite(newData); // or do something else
-        toggleOverwritePopup(false); // Hide the popup
-        // RenderSaveList(); // Re-render the save list
+        foundSave.OverWrite(newData);
+        toggleOverwritePopup(false);
     } else {
         console.log("No save found with ID:", saveID);
     }
 
+    // removes the items from savesContainer
+    RemoveSaveItems();
 
+    RenderSaveList();
+}
 
-    // remove the items from savesContainer and re add them
+function RemoveSaveItems() {
     const content = document.getElementById("savesContainer");
     const saveItems = content.querySelectorAll(".saveItem");
     saveItems.forEach(item => item.remove());
-
-    // Re-render the save list
-  RenderSaveList();
-
-
 }
 
 function RenderSaveList() {
-    const content = document.getElementById("savesContainer");
 
-    // Remove all saveItems (keep the 'New Save' button)
-    const saveItems = content.querySelectorAll(".saveItem");
-    saveItems.forEach(item => item.remove());
+    // C++ func
+    LoadSaves();
 
-    // Sort saves by timestamp DESC (newest first)
-    const sortedSaves = [...saves].sort((a, b) => b.GetTimeStamp() - a.GetTimeStamp());
+    RemoveSaveItems();
 
     // Render each save
-    for (let save of sortedSaves) {
+    for (let save of saves) {
         CreateSaveItemLabel(save.GetSaveName(), save.GetTimeStamp(), save.GetID());
     }
 }
 
-function DeleteSave() {
+function DeleteSave(pID) {
+
+    // c++ func
+    console.log("DeleteSave pID: " + pID);
+    console.log("Current save ID: " + currentSaveID);
+
+    TriggerDeleteSave(pID);
+    RenderSaveList();
+
     console.log("Delete save triggered.");
+    toggleDeletePopup(false);
 }
+
+
+
+function LoadSaves(evt) {
+
+    saves = [];
+    var message = GetSaves("Hello from JS - Saves!");
+
+
+    // throw these into the saves array
+    saves = message.map(save => new SaveItem(save.name, save.timeStamp, save.id));
+    // RenderSaveList();
+}
+
 
 // Waits for page to load first 
 window.addEventListener('DOMContentLoaded', () => {
 
+    //LoadSaves();
 
-    console.log("Page loaded, populating saves...");
-    PopulateSaves();
+    //console.log("Page loaded, populating saves...");
+    // PopulateSaves();
 
+
+    CreateSaveItemLabel("Dummy Save", Math.floor(Date.now() / 1000), 0); // Create a dummy save item for testing
+    console.log("Dummy save item created for testing.");
+
+    setTimeout(() => {
+        RenderSaveList();
+    }, 20);
+    
 
 });
 
