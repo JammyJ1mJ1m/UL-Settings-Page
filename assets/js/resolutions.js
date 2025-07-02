@@ -1,95 +1,121 @@
-// Use this to assign JSON ID to show current resolution states
 let mResolutionID = 0;
-
 const mValidResolutions = [
-  '3840x2160',
-  '2560x1440',
-  '1920x1080',
-  '1600x900',
-  '1280x720',
-  '1024x768',
-  '640x480',
+    '3840x2160', '2560x1440', '1920x1080',
+    '1600x900', '1280x720', '1024x768', '640x480'
 ];
 
-function selectResolution(value) {
-  console.log("Selected resolution: " + value); // or store it in a variable
-  // Optionally update button text:
-  document.querySelector(".dropbtn").textContent = value;
+let mDifficultyID = 0;
+const mDifficulties = [
+    'Easy', 'Normal', 'Hard', 'Extreme', 'Impossible'
+];
 
+// add your dropdown configs here
+// I've left the mResolutionID and mDifficultyID as global variables so that you can 
+// override them by passing data from CPP to here,
+// useful for loading a save config instead of having it default to 0 everytimes
+const dropdownConfigs = {
+    resolution: {
+        dropdownId: 'resolutionDropdown',
+        buttonSelector: "UNDEFINED", // leave this undefined for now as it gets filled in after creation of this array
+        values: mValidResolutions,
+        onSelect: (value) => {
+            const index = mValidResolutions.indexOf(value);
+            mResolutionID = index;
+            HandleDropdown(mResolutionID);
+        },
+        defaultIndex: mResolutionID;
+    },
 
-  // converting the string resolution to the index of the array
-  mResolutionID = mValidResolutions.indexOf(value);
-
-  // now send the resolution ID to C++
-    var message = HandleDropdown(mResolutionID);
-
-  // Close dropdown
-  toggleDropdown();
-}
-
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function toggleDropdown() {
-  document.getElementById("resolutionDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
+    difficulty: {
+        dropdownId: 'difficultyDropdown',
+        buttonSelector: "UNDEFINED",
+        values: mDifficulties,
+        onSelect: (value) => {
+            const index = mDifficulties.indexOf(value);
+            mDifficultyID = index;
+            HandleDropdownDifficulty(mDifficultyID);
+        },
+        defaultIndex: mDifficultyID;
     }
-  }
+
+    // you can add more configs here
+    // ...
+    // ...
+};
+
+
+// we fill this in here because A, laziness and B, the objects now exist so we can loop over them
+for (const key in dropdownConfigs) {
+    const config = dropdownConfigs[key];
+    config.buttonSelector = `[data-dropdown-id="${config.dropdownId}"]`;
 }
 
-// Will loop over the resolutions array and add them to 
-// the dropdown in video page
-function PopulateResolutions() {
-  try {
-    const dropdown = document.getElementById('resolutionDropdown');
-    dropdown.innerHTML = ''; // Clear existing items
 
-    if (mValidResolutions && dropdown) {
-      mValidResolutions.forEach(res => {
-        const link = document.createElement('a');
-        link.href = '#';
-        link.textContent = res;
-        link.onclick = () => selectResolution(res);
-        dropdown.appendChild(link);
-      });
+function initDropdowns() {
+    for (const key in dropdownConfigs) {
+        const config = dropdownConfigs[key];
+        const dropdown = document.getElementById(config.dropdownId);
+        const button = document.querySelector(config.buttonSelector);
+        const defaultIndex = (typeof config.defaultIndex === 'number') ? config.defaultIndex : 0;
+        const defaultText = config.values[defaultIndex];
 
-      // Optionally update the button text to the default selected resolution
-      document.querySelector(".dropbtn").textContent = mValidResolutions[mResolutionID] ;
+
+        // if there isnt a button skip and report error
+        if (!button) {
+            console.log("Error, missing button: " + key);
+            continue;
+        }
+
+
+        button.textContent = defaultText;
+
+
+        dropdown.innerHTML = '';
+        config.values.forEach(value => {
+            const item = document.createElement('a');
+            item.href = '#';
+            item.textContent = value;
+            item.onclick = () => {
+                if (button) button.textContent = value;
+                config.onSelect(value);
+                dropdown.classList.remove('show');
+            };
+            dropdown.appendChild(item);
+        });
+
+
+        button.addEventListener('click', () => {
+            dropdown.classList.toggle('show');
+        });
+
     }
-  } catch (error) {
-    console.error("Error populating resolutions:", error);
-  }
+
+    // clicks outside of dropdown will close it
+    window.addEventListener('click', function (e) {
+        if (!e.target.matches('.dropbtn')) {
+            document.querySelectorAll('.dropdown-content.show').forEach(el => {
+                el.classList.remove('show');
+            });
+        }
+    });
 }
 
+function attachCheckboxHandler(elementId, cppIdentifier) {
+    const checkbox = document.getElementById(elementId);
+    if (checkbox) {
+        checkbox.addEventListener('change', function () {
+            HandleRadioButton(this.checked, cppIdentifier);
+        });
+    } else {
+        console.warn(`Checkbox with ID '${elementId}' not found.`);
+    }
+}
 
-
-
-document.getElementById("vsync").addEventListener("change", function() {
-    // Call your specific function here
-
-    var message = HandleRadioButton(this.checked, "vsync");
-
-});
-
-document.getElementById("fullscreen").addEventListener("change", function() {
-    // Call your specific function here
-
-    var message = HandleRadioButton(this.checked, "fullscreen");
-
-});
 
 window.addEventListener('DOMContentLoaded', () => {
-  CreateNavbar();
-  PopulateResolutions();
+    CreateNavbar();
+    initDropdowns();
 
+    attachCheckboxHandler("fullscreen", "fullscreen");
+    attachCheckboxHandler("vsync", "vsync");
 });

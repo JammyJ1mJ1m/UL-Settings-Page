@@ -10,15 +10,43 @@
 
     <div id="navbar-placeholder"></div>
 
-    
-    <div class="contentWrapper">
+
+        <div class="contentWrapper">
+            <div class="settingRow">
+                <label for="screenshake">Screen Shake:</label>
+                <div class="inputWrapper">
+                    <label class="checkBoxContainer">
+                        <input type="checkbox" id="screenshake">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        
+
+
+
+
+
         <div class="settingRow">
             <label for="resolution">Resolution:</label>
             <div class="inputWrapper">
-                <button onclick="toggleDropdown()" class="dropbtn">Dropdown</button>
+                <button data-dropdown-id="resolutionDropdown" class="dropbtn">Dropdown</button>
                 <div id="resolutionDropdown" class="dropdown-content"></div>
             </div>
         </div>
+
+        <div class="settingRow">
+            <label for="difficulty">Difficulty:</label>
+            <div class="inputWrapper">
+                <button data-dropdown-id="difficultyDropdown" class="dropbtn">Dropdown</button>
+                <div id="difficultyDropdown" class="dropdown-content"></div>
+            </div>
+        </div>
+
+
+
+
+
 
         <div class="settingRow">
             <label for="fullscreen">Fullscreen:</label>

@@ -85,6 +85,7 @@ public:
 
 	JSValue HandleRadioButton(const JSObject& thisObject, const JSArgs& args);
 	JSValue HandleDropdown(const JSObject& thisObject, const JSArgs& args);
+	JSValue HandleDropdownDifficulty(const JSObject& thisObject, const JSArgs& args);
 
 
 	void SortSaves();
@@ -221,6 +222,7 @@ public:
 
 		global["HandleRadioButton"] = BindJSCallbackWithRetval(&MyApp::HandleRadioButton);
 		global["HandleDropdown"] = BindJSCallbackWithRetval(&MyApp::HandleDropdown);
+		global["HandleDropdownDifficulty"] = BindJSCallbackWithRetval(&MyApp::HandleDropdownDifficulty);
 
 
 #pragma endregion
@@ -422,6 +424,23 @@ JSValue MyApp::HandleDropdown(const JSObject& thisObject, const JSArgs& args)
 
 
 		return JSValue(true); 
+	}
+	else {
+		std::cout << "Invalid arguments for HandleDropdown" << std::endl;
+		return JSValue(false);
+	}
+
+	return JSValue(true);
+}
+
+JSValue MyApp::HandleDropdownDifficulty(const JSObject& thisObject, const JSArgs& args)
+{
+	if (args.size() > 0 && args[0].IsNumber()) {
+		int selectedIndex = static_cast<int>(args[0].ToNumber());
+		std::cout << "Difficulty selection changed to index: " << selectedIndex << std::endl;
+
+
+		return JSValue(true);
 	}
 	else {
 		std::cout << "Invalid arguments for HandleDropdown" << std::endl;
