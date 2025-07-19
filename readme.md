@@ -8,3 +8,7 @@
 *Dropdowns* <br>
 - [ ] move the dropdown configs into a class <br>
 - [ ] change the current dropdown config array to hold the dropdown objects <br>
+
+*General* 
+- [ ] move dropdown / checkbox logic to a seperate common settings.js
+- [ ] move dropdown / checkbox styles to  a seperate settings.css
